@@ -30,7 +30,8 @@
         initialFrameHeight: 600,
         initialFrameWidth: "100%",
         backgroundWidth: 830,
-        backgroundHeight: 450
+        backgroundHeight: 450,
+        backgroundStyle: 'font-size: 14px; font-family: Arial,sans-serif;line-height: 20px;'
     };
     Draw.prototype = {
         _initEvents: function() {
@@ -50,6 +51,7 @@
             'click .savecode': 'saveCode',
             'click .express': 'genExpress',
             'click .refresh': 'refresh',
+            'click .preview': 'preview'
         },
         buttonActions: {
             createSquare: function() {
@@ -80,6 +82,15 @@
             refresh: function() {
                 this.unbind();
                 this.clearDiv();
+            },
+            preview: function() {
+                var html = this.outHtml();
+                html = this.filterRules(html);
+                var winname = window.open('', "_blank", '');
+                winname.document.open('text/html', 'replace');
+                winname.opener = null;
+                winname.document.write(html);
+                winname.document.close(); 
             }
         },
         _expressFields: function() {
@@ -130,6 +141,7 @@
             var bg = this.bg;
 
             var uploader = WebUploader.create({
+                // runtimeOrder: 'flash',
                 pick: {
                     id: '#filePickerReady',
                     multiple: false
@@ -139,7 +151,7 @@
                     extensions: 'gif,jpg,jpeg,bmp,png',
                     mimeTypes: 'image/*'
                 },
-                swf: '../vendor/Uploader.swf',
+                swf: (~$('link').attr('href').indexOf('assets') ? 'assets/': '') + 'images/Uploader.swf',
                 server: 'about:blank;',
                 duplicate: true,
                 fileSingleSizeLimit: '1mb', // 默认 2 M
@@ -236,7 +248,7 @@
         },
         createBg: function() {
             var bg = $('<div />', {
-                style: 'position: relative; width: ' + this.options.backgroundWidth +'px; height: ' + this.options.backgroundHeight +'px;'
+                style: 'position: relative; width: ' + this.options.backgroundWidth +'px; height: ' + this.options.backgroundHeight +'px;' + this.options.backgroundStyle
             });
             this.bg = bg;
             this.$body.append(bg);

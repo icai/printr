@@ -3,22 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>HTML单据打印模板编辑器</title>
-	<meta name="keywords" content="打印模板,快递单打印模板,html打印模板,">
+	<meta name="keywords" content="打印模板,快递单打印模板,html打印模板">
+
+	<!-- build:css assets/css/app.css -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/webuploader.css">
-	<style type="text/css">
-		.box{
-			width: 1170px;
-			margin: 0 auto;
-		}
-
-		.mt10{
-			margin-top: 10px;
-		}
-		.drawbox{
-
-		}
-	</style>
+	<link rel="stylesheet" href="css/index.css">
+	<!-- endbuild -->
 </head>
 <body>
 <div id="wrapper">
@@ -42,6 +33,7 @@
 						<button type="button" class="btn btn-default savecode" data-toggle="tooltip" title="Save"><i class="glyphicon glyphicon-save"></i></button>						
 					</div>
 					<div class="pull-right">
+						<button type="button" class="btn btn-default preview" data-toggle="tooltip" title="Preview"><i class="glyphicon glyphicon-eye-open"></i></button>
 						<button type="button" class="btn btn-default express" data-toggle="tooltip" title="Express"><i class="glyphicon glyphicon-barcode"></i></button>
 						<button type="button" class="btn btn-default refresh" data-toggle="tooltip" title="Refresh"><i class="glyphicon glyphicon-refresh"></i></button>
 					</div>
@@ -73,6 +65,7 @@
 	</footer>
 
 </div>
+<!-- build:js assets/js/app.js -->
 <script src="js/vendor/jquery.min.js"></script>
 <script src="js/vendor/jquery-ui.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
@@ -80,5 +73,6 @@
 <script src="js/com/base.js"></script>
 <script src="js/modules/index.js"></script>
 <script src="js/main.js"></script>
+<!-- endbuild -->
 </body>
 </html>
