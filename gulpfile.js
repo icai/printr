@@ -7,6 +7,7 @@ var useref = require('gulp-useref');
 var filter = require('gulp-filter');
 var uglify = require('gulp-uglify');
 var csso = require('gulp-csso');
+var server = require('gulp-server-livereload');
 
 
 gulp.task('clean', function () {
@@ -39,6 +40,18 @@ gulp.task("index", ['clean'], function() {
     .pipe(indexHtmlFilter.restore)
     .pipe(revReplace())      // Substitute in new filenames
     .pipe(gulp.dest('public'));
+});
+
+
+
+
+gulp.task('serve', function() {
+  gulp.src('src')
+    .pipe(server({
+      livereload: true,
+      // directoryListing: true,
+      open: true
+    }));
 });
 
 

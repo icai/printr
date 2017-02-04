@@ -51,7 +51,8 @@
             'click .savecode': 'saveCode',
             'click .express': 'genExpress',
             'click .refresh': 'refresh',
-            'click .preview': 'preview'
+            'click .preview': 'preview',
+            'click .import': 'convertHtml'
         },
         buttonActions: {
             createSquare: function() {
@@ -64,7 +65,7 @@
             saveCode: function() {
                 var html = this.outHtml();
                 html = this.filterRules(html);
-                html = '<!-- generate by print.w3cub.com -->' + html;
+                html = '<!-- generate by w3cub.com -->' + html;
                 var a = document.createElement("a");
                 a.href = "data:text/html;charset=utf8," + encodeURIComponent(html);
                 a.download = 'draw_' + com.random(1e8) + '.html';
@@ -91,6 +92,9 @@
                 winname.opener = null;
                 winname.document.write(html);
                 winname.document.close(); 
+            },
+            convertHtml: function(){
+
             }
         },
         _expressFields: function() {
@@ -223,21 +227,34 @@
                 }).appendTo(this.parent);
             }
         },
-        createDiv: function(box, name, info) {
-            info || (info = this.getBgInfo());
+        _createDiv: function (info){
+            if(info && !info.width){
+                return false;
+            }
             var div = $('<div />', {
                 class: this.elCls,
                 style: 'height: 100px; width: 100px; position:absolute;',
-                html: '<div style="height: 100%; width: 100%;" contenteditable="true">' + (name ? name : '') + '</div><div class="move"></div><div class="sq_close">×</div>'
+                html: '<div style="height: 100%; width: 100%;" contenteditable="true">' + (info.name ? info.name : '') + '</div><div class="move"></div><div class="sq_close">×</div>'
             });
-            box.append(div);
             div.css({
-                left: com.random(info.width - 100),
-                top: com.random(info.height - 100)
+                left: info.width,
+                top: info.height
             })
             div.on('click', '.sq_close', function(e){
                 $(e.currentTarget).parents('.' + this.elCls).remove();
             }.bind(this))
+            return div;
+
+        },
+        createDiv: function(box, name, info) {
+            info || (info = this.getBgInfo());
+            var pass = {
+                width: com.random(info.width - 100),
+                height: com.random(info.height - 100),
+                name: name
+            };
+            var div = this._createDiv(pass);
+            box.append(div);
             return div;
         },
         clearDiv: function() {
